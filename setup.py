@@ -17,4 +17,7 @@ setup(
     url='https://github.com/dionysio/csvsorter',
     download_url = 'https://github.com/dionysio/csvsorter/tarball/1.4',
     license='lgpl',
+    install_requires=[
+        "smart_open[s3]==4.2.0",
+    ],
 )

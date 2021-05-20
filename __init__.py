@@ -3,13 +3,14 @@
 
 import os, sys, csv, heapq, shutil
 from optparse import OptionParser
+from smart_open import open
 
 
 class CsvSortError(Exception):
     pass
 
 
-def csvsort(input_filename, columns, output_filename='', max_size=100, has_header=True, delimiter=',', quoting=csv.QUOTE_MINIMAL, encoding='utf-8'):
+def csvsort(input_filename, columns, output_filename='', max_size=100, has_header=True, delimiter=',', quoting=csv.QUOTE_MINIMAL, encoding='utf-8', **open_kwargs):
     """Sort the CSV file on disk rather than in memory
     The merge sort algorithm is used to break the file into smaller sub files and
 
@@ -26,7 +27,7 @@ def csvsort(input_filename, columns, output_filename='', max_size=100, has_heade
     os.makedirs(tmp_dir, exist_ok=True)
 
     try:
-        with open(input_filename, 'r', encoding=encoding) as input_fp:
+        with open(input_filename, 'r', encoding=encoding, **open_kwargs) as input_fp:
             reader = csv.reader(input_fp, delimiter=delimiter)
             if has_header:
                 header = next(reader)
@@ -42,7 +43,7 @@ def csvsort(input_filename, columns, output_filename='', max_size=100, has_heade
 
         # XXX make more efficient by passing quoting, delimiter, and moving result
         # generate the final output file
-        with open(output_filename or input_filename, 'w', newline='\n', encoding=encoding) as output_fp:
+        with open(output_filename or input_filename, 'w', newline='\n', encoding=encoding, **open_kwargs) as output_fp:
             writer = csv.writer(output_fp, delimiter=delimiter, quoting=quoting)
             if header:
                 writer.writerow(header)
