@@ -10,7 +10,7 @@ class CsvSortError(Exception):
     pass
 
 
-def csvsort(input_filename, columns, output_filename='', max_size=100, has_header=True, delimiter=',', quoting=csv.QUOTE_MINIMAL, encoding='utf-8', **kwargs):
+def smartcsvsort(input_filename, columns, output_filename='', max_size=100, has_header=True, delimiter=',', quoting=csv.QUOTE_MINIMAL, encoding='utf-8', **kwargs):
     """Sort the CSV file on disk rather than in memory
     The merge sort algorithm is used to break the file into smaller sub files and
 
